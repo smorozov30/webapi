@@ -1,8 +1,11 @@
 package ru.morozovsu.webapi.service
 
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import org.springframework.kafka.core.KafkaTemplate
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import ru.morozovsu.webapi.dto.CarDto
+import ru.morozovsu.webapi.help.KafkaConstants.Companion.CAR_TOPIC
 import ru.morozovsu.webapi.repository.CarRepository
 
 /**
@@ -12,7 +15,11 @@ import ru.morozovsu.webapi.repository.CarRepository
  */
 @Service
 @Transactional(readOnly = true)
-class CarService(val carRepository: CarRepository) {
+class CarService(val carRepository: CarRepository,
+                 val kafkaTemplate: KafkaTemplate<String, String>) {
+
+
+    val mapper = jacksonObjectMapper()
 
     /**
      * Метод получения Автомобиля по ID.
@@ -20,6 +27,9 @@ class CarService(val carRepository: CarRepository) {
      * @return DTO для работы с автомобилем.
      */
     fun getCarById(id: Int): CarDto {
-        return carRepository.getCarById(id)
+        val carDto = carRepository.getCarById(id)
+        val carDtoJson = mapper.writeValueAsString(carDto)
+        kafkaTemplate.send(CAR_TOPIC, carDtoJson)
+        return carDto
     }
 }
