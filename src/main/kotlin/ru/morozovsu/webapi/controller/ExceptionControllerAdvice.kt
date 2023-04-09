@@ -19,10 +19,10 @@ class ExceptionControllerAdvice {
      * @return http-ответ для пользователя со статусом 404, если данные по запросу не были найдены.
      */
     @ExceptionHandler
-    fun handleIllegalStateException(ex: DataNotFoundByIdException): ResponseEntity<DataNotFoundMessage> {
+    fun handleIllegalStateException(exception: DataNotFoundByIdException): ResponseEntity<DataNotFoundMessage> {
         val errorMessage = DataNotFoundMessage(
                 HttpStatus.NOT_FOUND.value(),
-                ex.message
+                exception.message
         )
         return ResponseEntity(errorMessage, HttpStatus.NOT_FOUND)
     }

@@ -6,7 +6,7 @@ package ru.morozovsu.webapi.exception
  * @property status http-статус ответа
  * @property message сообщение ответа
  */
-class DataNotFoundMessage(
+data class DataNotFoundMessage(
         private var status: Int? = null,
         private var message: String? = null
 )

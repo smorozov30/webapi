@@ -37,7 +37,7 @@ class CarRepository(private val dsl: DSLContext) {
                             row.get(MAKE.NAME),
                             row.get(MODEL.NAME)
                     )
-                // todo подумать о вынесении текста сообщения для исключения в ресурсы и использование MessageSource.
+                // todo вынесети текст сообщения для исключения в ресурсы и использовать MessageSource.
                 } ?: throw DataNotFoundByIdException("Car was not found by id: $id")
     }
 }
