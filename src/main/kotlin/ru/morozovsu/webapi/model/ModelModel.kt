@@ -1,4 +1,4 @@
-package ru.morozovsu.webapi.dto
+package ru.morozovsu.webapi.model
 
 /**
  * DTO для работы с сущностью модели автомобиля.

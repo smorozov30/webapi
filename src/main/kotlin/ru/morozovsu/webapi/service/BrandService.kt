@@ -2,7 +2,7 @@ package ru.morozovsu.webapi.service
 
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import ru.morozovsu.webapi.dto.BrandModel
+import ru.morozovsu.webapi.model.BrandModel
 import ru.morozovsu.webapi.repository.BrandRepository
 
 /**

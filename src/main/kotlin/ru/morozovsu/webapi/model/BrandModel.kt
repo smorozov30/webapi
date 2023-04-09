@@ -1,4 +1,4 @@
-package ru.morozovsu.webapi.dto
+package ru.morozovsu.webapi.model
 
 /**
  * DTO для работы с сущностью марки автомобиля.
@@ -10,4 +10,4 @@ package ru.morozovsu.webapi.dto
  */
 data class BrandModel(var id: Int,
                       var name: String,
-                      var models: List<ModelModel>)
+                      var models: List<ModelModel> = ArrayList())

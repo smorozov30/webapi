@@ -4,7 +4,7 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
-import ru.morozovsu.webapi.dto.BrandModel
+import ru.morozovsu.webapi.model.BrandModel
 import ru.morozovsu.webapi.service.BrandService
 
 /**
@@ -23,7 +23,7 @@ class BrandController(val brandService: BrandService) {
      * @return DTO с данными марки автомобиля.
      */
     @GetMapping("/{id}")
-    fun getCar(@PathVariable id: Int): BrandModel {
+    fun getBrandById(@PathVariable id: Int): BrandModel {
         return brandService.getBrandById(id)
     }
 }

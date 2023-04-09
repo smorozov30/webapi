@@ -9,15 +9,26 @@ import org.springframework.messaging.handler.annotation.Payload
 import org.springframework.stereotype.Component
 import ru.morozovsu.webapi.help.KafkaConstants
 
+/**
+ * Класс слушатель сообщений из очередей kafka.
+ * todo удалить поле написания тестов
+ */
 @Component
 class KafkaConsumer {
 
     private val logger: Logger = LoggerFactory.getLogger(KafkaConsumer::class.java)
 
-    @KafkaListener(topics = [KafkaConstants.CAR_TOPIC], groupId = "car_group_id")
-    fun consume(@Payload message: String,
+    @KafkaListener(topics = [KafkaConstants.CAR_SIMPLE_TOPIC], groupId = "car_group_id")
+    fun consumeSimpleCarInfo(@Payload message: String,
                 @Header(KafkaHeaders.RECEIVED_TOPIC) topic: String
     ) {
-        logger.info(String.format("#### -> Consumed message -> %s; topic: %s;", message, topic))
+        logger.info(String.format("#### -> SimpleCarInfo: Consumed message -> %s; topic: %s;", message, topic))
+    }
+
+    @KafkaListener(topics = [KafkaConstants.CAR_TOPIC], groupId = "car_group_id")
+    fun consumeCarInfo(@Payload message: String,
+                @Header(KafkaHeaders.RECEIVED_TOPIC) topic: String
+    ) {
+        logger.info(String.format("#### -> CarInfo: Consumed message -> %s; topic: %s;", message, topic))
     }
 }
