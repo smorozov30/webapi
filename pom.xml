@@ -35,12 +35,6 @@
             <artifactId>spring-kafka</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>com.fasterxml.jackson.module</groupId>
-            <artifactId>jackson-module-kotlin</artifactId>
-            <version>2.14.2</version>
-        </dependency>
-
         <!-- DB -->
         <dependency>
             <groupId>org.postgresql</groupId>
@@ -122,6 +116,33 @@
                         <version>${kotlin.version}</version>
                     </dependency>
                 </dependencies>
+            </plugin>
+
+            <plugin>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-maven-plugin</artifactId>
+                <version>3.0</version>
+
+                <!-- Note that we're executing the Flyway plugin in the "generate-sources" phase -->
+                <executions>
+                    <execution>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>migrate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <url>${spring.datasource.url}</url>
+                    <user>${spring.datasource.username}</user>
+                    <password>${spring.datasource.password}</password>
+                    <schemas>
+                        <schema>${spring.flyway.schemas}</schema>
+                    </schemas>
+                    <locations>
+                        <location>${spring.flyway.locations}</location>
+                    </locations>
+                </configuration>
             </plugin>
 
             <plugin>

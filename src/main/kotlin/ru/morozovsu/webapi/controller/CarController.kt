@@ -1,7 +1,7 @@
 package ru.morozovsu.webapi.controller
 
 import org.springframework.web.bind.annotation.*
-import ru.morozovsu.webapi.dto.CarDto
+import ru.morozovsu.webapi.dto.CarModel
 import ru.morozovsu.webapi.service.CarService
 
 /**
@@ -20,7 +20,7 @@ class CarController(val carService: CarService) {
      * @return DTO с данными автомобиля.
      */
     @GetMapping("/{id}")
-    fun getCar(@PathVariable id: Int): CarDto {
+    fun getCar(@PathVariable id: Int): CarModel {
         return carService.getCarById(id)
     }
 }

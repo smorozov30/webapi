@@ -2,10 +2,10 @@ package ru.morozovsu.webapi.repository
 
 import org.jooq.DSLContext
 import org.springframework.stereotype.Repository
-import ru.morozovsu.webapi.dto.CarDto
+import ru.morozovsu.webapi.dto.CarModel
 import ru.morozovsu.webapi.exception.DataNotFoundByIdException
 import ru.morozovsu.webapi.jooq.Tables.CAR
-import ru.morozovsu.webapi.jooq.Tables.MAKE
+import ru.morozovsu.webapi.jooq.Tables.BRAND
 import ru.morozovsu.webapi.jooq.Tables.MODEL
 
 /**
@@ -22,19 +22,19 @@ class CarRepository(private val dsl: DSLContext) {
      *
      * @return DTO автомобиля или исключение если по ID не было найдено данных.
      */
-    fun getCarById(id: Int): CarDto {
+    fun getCarById(id: Int): CarModel {
         return dsl.select(
-                CAR.ID, MAKE.NAME, MODEL.NAME
+                CAR.ID, BRAND.NAME, MODEL.NAME
         )
                 .from(CAR)
-                .leftJoin(MAKE).on(MAKE.ID.eq(CAR.MAKE_ID))
+                .leftJoin(BRAND).on(BRAND.ID.eq(CAR.BRAND_ID))
                 .leftJoin(MODEL).on(MODEL.ID.eq(CAR.MODEL_ID))
                 .where(CAR.ID.eq(id))
                 .fetchOne()
                 ?.map {row ->
-                    CarDto(
+                    CarModel(
                             row.get(CAR.ID),
-                            row.get(MAKE.NAME),
+                            row.get(BRAND.NAME),
                             row.get(MODEL.NAME)
                     )
                 // todo вынесети текст сообщения для исключения в ресурсы и использовать MessageSource.

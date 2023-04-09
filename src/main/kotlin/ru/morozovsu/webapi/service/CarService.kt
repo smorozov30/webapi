@@ -4,7 +4,7 @@ import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import org.springframework.kafka.core.KafkaTemplate
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import ru.morozovsu.webapi.dto.CarDto
+import ru.morozovsu.webapi.dto.CarModel
 import ru.morozovsu.webapi.help.KafkaConstants.Companion.CAR_TOPIC
 import ru.morozovsu.webapi.repository.CarRepository
 
@@ -18,7 +18,9 @@ import ru.morozovsu.webapi.repository.CarRepository
 class CarService(val carRepository: CarRepository,
                  val kafkaTemplate: KafkaTemplate<String, String>) {
 
-
+    /**
+     * Маппер можели автомобиля в json.
+     */
     val mapper = jacksonObjectMapper()
 
     /**
@@ -26,7 +28,7 @@ class CarService(val carRepository: CarRepository,
      *
      * @return DTO для работы с автомобилем.
      */
-    fun getCarById(id: Int): CarDto {
+    fun getCarById(id: Int): CarModel {
         val carDto = carRepository.getCarById(id)
         val carDtoJson = mapper.writeValueAsString(carDto)
         kafkaTemplate.send(CAR_TOPIC, carDtoJson)

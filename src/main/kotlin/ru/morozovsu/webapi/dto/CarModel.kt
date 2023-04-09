@@ -8,6 +8,6 @@ package ru.morozovsu.webapi.dto
  * @property model модель автомобиля.
  * @constructor создает DTO автомобиля.
  */
-data class CarDto(val id: Int,
-                  val make: String,
-                  val model: String)
+data class CarModel(var id: Int,
+                    var make: String,
+                    var model: String)
